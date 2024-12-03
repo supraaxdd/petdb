@@ -4,11 +4,15 @@ import com.supra.petdb.entities.Pet;
 import com.supra.petdb.entities.PetRecord;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -18,56 +22,88 @@ public class PetRepository implements IPetRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public void createPet(Pet pet) {
-        String sql = "INSERT INTO pets VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, pet);
+    public Pet createPet(Pet pet) {
+        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("pets")
+                .usingGeneratedKeyColumns("id");
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("name", pet.getName());
+        params.addValue("animalType", pet.getAnimalType());
+        params.addValue("breed", pet.getBreed());
+        params.addValue("age", pet.getAge());
+
+        int pk = simpleJdbcInsert.executeAndReturnKey(params).intValue();
+        pet.setId(pk);
+        return pet;
     }
 
     @Override
     public List<Pet> getAllPets() {
         String sql = "SELECT * FROM pets";
-
-        return List.of();
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Pet.class));
     }
 
     @Override
-    public Pet getPetById(int id) {
-        return null;
+    public Optional<Pet> getPetById(int id) {
+        String sql = "SELECT * FROM pets WHERE id = ?";
+
+        try {
+            Pet pet = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Pet.class), id);
+            return Optional.of(pet);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
-    public void updatePet(int id, Pet pet) {
+    public int updatePet(int id, Pet pet) {
+        String sql = "UPDATE pets SET name = ?, animalType = ?, breed = ?, age = ? WHERE id = ?";
 
+        return jdbcTemplate.update(sql,
+                pet.getName(),
+                pet.getAnimalType(),
+                pet.getBreed(),
+                pet.getAge(),
+                id);
     }
 
     @Override
     public void deletePetById(int id) {
+        String sql = "DELETE FROM pets WHERE id = ?";
 
+        jdbcTemplate.update(sql, id);
     }
 
     @Override
     public void deletePetByName(String name) {
+        String sql = "DELETE FROM pets WHERE name = ?";
 
+        jdbcTemplate.update(sql, name);
     }
 
     @Override
     public List<Pet> getPetsByType(String type) {
-        return List.of();
+        String sql = "SELECT * FROM pets WHERE animalType = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Pet.class), type);
     }
 
     @Override
     public List<Pet> getPetsByBreed(String breed) {
-        return List.of();
+        String sql = "SELECT * FROM pets WHERE breed = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Pet.class), breed);
     }
 
     @Override
     public List<PetRecord> getPetRecords() {
-        return List.of();
+        String sql = "SELECT * FROM pets";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(PetRecord.class));
     }
 
     @Override
     public int getAveragePetAge() {
-        return 0;
+        String sql = "SELECT AVG(age) FROM pets";
+        return jdbcTemplate.queryForObject(sql, Integer.class);
     }
 
     @Override
