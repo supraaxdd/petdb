@@ -58,7 +58,7 @@ public class PetRepository implements IPetRepository {
 
     @Override
     public int updatePet(int id, Pet pet) {
-        String sql = "UPDATE pets SET name = ?, animalType = ?, breed = ?, age = ? WHERE id = ?";
+        String sql = "UPDATE pets SET name = ?, animal_type = ?, breed = ?, age = ? WHERE id = ?";
 
         return jdbcTemplate.update(sql,
                 pet.getName(),
