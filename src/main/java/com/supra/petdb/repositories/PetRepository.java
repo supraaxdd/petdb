@@ -75,13 +75,6 @@ public class PetRepository implements IPetRepository {
     }
 
     @Override
-    public int deletePetByName(String name) {
-        String sql = "DELETE FROM pets WHERE name = ?";
-
-        return jdbcTemplate.update(sql, name);
-    }
-
-    @Override
     public List<Pet> getPetsByType(String type) {
         String sql = "SELECT * FROM pets WHERE animalType = ?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Pet.class), type);
