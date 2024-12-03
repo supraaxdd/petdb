@@ -49,8 +49,10 @@ public class PetService implements IPetService {
     }
 
     @Override
-    public void deletePetByName(String name) {
-        petRepository.deletePetByName(name);
+    public int deletePetByName(String name) {
+        int result = petRepository.deletePetByName(name);
+        if (result == 0) throw new EntityNotFoundException("Pet not found; therefore not deleted");
+        else return result;
     }
 
     @Override
