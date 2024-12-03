@@ -3,7 +3,6 @@ package com.supra.petdb.repositories;
 import com.supra.petdb.entities.Pet;
 import com.supra.petdb.entities.PetRecord;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -69,17 +68,17 @@ public class PetRepository implements IPetRepository {
     }
 
     @Override
-    public void deletePetById(int id) {
+    public int deletePetById(int id) {
         String sql = "DELETE FROM pets WHERE id = ?";
 
-        jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, id);
     }
 
     @Override
-    public void deletePetByName(String name) {
+    public int deletePetByName(String name) {
         String sql = "DELETE FROM pets WHERE name = ?";
 
-        jdbcTemplate.update(sql, name);
+        return jdbcTemplate.update(sql, name);
     }
 
     @Override

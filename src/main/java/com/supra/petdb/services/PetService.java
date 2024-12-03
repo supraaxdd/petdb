@@ -3,11 +3,13 @@ package com.supra.petdb.services;
 import com.supra.petdb.entities.Pet;
 import com.supra.petdb.entities.PetRecord;
 import com.supra.petdb.repositories.PetRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Data
@@ -27,17 +29,23 @@ public class PetService implements IPetService {
 
     @Override
     public Pet getPetById(int id) {
-        return petRepository.getPetById(id).isPresent() ? petRepository.getPetById(id).get() : null;
+        Optional<Pet> result = petRepository.getPetById(id);
+        if (result.isPresent()) return petRepository.getPetById(id).get();
+        else throw new EntityNotFoundException("Pet not found");
     }
 
     @Override
     public int updatePet(int id, Pet pet) {
-        return petRepository.updatePet(id, pet);
+        int result = petRepository.updatePet(id, pet);
+        if (result == 0) throw new EntityNotFoundException("Pet not found; therefore not updated");
+        else return result;
     }
 
     @Override
-    public void deletePetById(int id) {
-        petRepository.deletePetById(id);
+    public int deletePetById(int id) {
+        int result = petRepository.deletePetById(id);
+        if (result == 0) throw new EntityNotFoundException("Pet not found; therefore not deleted");
+        else return result;
     }
 
     @Override
