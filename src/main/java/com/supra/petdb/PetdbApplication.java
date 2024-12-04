@@ -10,7 +10,6 @@ public class PetdbApplication {
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(PetdbApplication.class, args);
         PetService petService = context.getBean(PetService.class);
-        System.out.println(petService.getTotalPetCount());
+        System.out.println(petService.getAllPets());
     }
-
 }

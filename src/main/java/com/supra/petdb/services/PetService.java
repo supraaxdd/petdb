@@ -2,7 +2,7 @@ package com.supra.petdb.services;
 
 import com.supra.petdb.entities.Pet;
 import com.supra.petdb.entities.PetRecord;
-import com.supra.petdb.repositories.PetRepository;
+import com.supra.petdb.repositories.IPetRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,45 +15,47 @@ import java.util.Optional;
 @Data
 @AllArgsConstructor
 public class PetService implements IPetService {
-    private PetRepository petRepository;
+    private IPetRepository petRepository;
 
     @Override
     public void createPet(Pet pet) {
         // TODO: ENFORCE DATA INTEGRITY
-        petRepository.createPet(pet);
+        petRepository.save(pet);
     }
 
     @Override
     public List<Pet> getAllPets() {
-        return petRepository.getAllPets();
+        return petRepository.findAll();
     }
 
     @Override
     public Pet getPetById(int id) {
-        Optional<Pet> result = petRepository.getPetById(id);
-        if (result.isPresent()) return petRepository.getPetById(id).get();
+        Optional<Pet> result = petRepository.findById(id);
+        if (result.isPresent()) return petRepository.findById(id).get();
         else throw new EntityNotFoundException("Pet not found");
     }
 
     @Override
-    public int updatePet(int id, Pet pet) {
-        int result = petRepository.updatePet(id, pet);
-        if (result == 0) throw new EntityNotFoundException("Pet not found; therefore not updated");
-        else return result;
+    public void updatePet(int id, Pet pet) {
+        Pet existingPet = petRepository.findById(id).get();
+
+        existingPet.setName(pet.getName());
+        existingPet.setAnimalType(pet.getAnimalType());
+        existingPet.setBreed(pet.getBreed());
+        existingPet.setAge(pet.getAge());
+        existingPet.setHousehold(pet.getHousehold());
+
+        petRepository.save(existingPet);
     }
 
     @Override
-    public int deletePetById(int id) {
-        int result = petRepository.deletePetById(id);
-        if (result == 0) throw new EntityNotFoundException("Pet not found; therefore not deleted");
-        else return result;
+    public void deletePetById(int id) {
+        petRepository.deleteById(id);
     }
 
     @Override
-    public int deletePetByName(String name) {
-        int result = petRepository.deletePetByName(name);
-        if (result == 0) throw new EntityNotFoundException("Pet not found; therefore not deleted");
-        else return result;
+    public void deletePetByName(String name) {
+        petRepository.deletePetByName(name);
     }
 
     @Override

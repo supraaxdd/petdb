@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PetRecord {
-    private int id;
+    private String name;
     private String animalType;
     private String breed;
 }
