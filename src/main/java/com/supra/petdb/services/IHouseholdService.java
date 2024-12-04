@@ -14,12 +14,5 @@ public interface IHouseholdService {
     public void deleteHouseholdById(String eircode);
     public List<Household> getHouseholdsWithoutPets();
 
-    @Query("SELECT h FROM Household h WHERE h.ownerOccupied = true")
-    public List<Household> fidOwnerOccupied();
 
-    @Query("SELECT COUNT(h) FROM Household h WHERE h.numberOfOccupants = 0")
-    public int countEmptyHouseholds();
-
-    @Query("SELECT COUNT(h) FROM Household h WHERE h.numberOfOccupants = h.maxNumberOfOccupants")
-    public int countFullHouseholds();
 }

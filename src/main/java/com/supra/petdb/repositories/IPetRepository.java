@@ -11,12 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IPetRepository extends JpaRepository<Pet, Integer> {
-    public Pet createPet(Pet pet);
-    public List<Pet> getAllPets();
-    public Optional<Pet> getPetById(int id);
-    public int updatePet(int id, Pet pet);
-    public int deletePetById(int id);
-
     @Modifying
     @Query("DELETE FROM Pet p WHERE LOWER(p.name) = LOWER(:name)")
     public int deletePetByName(@Param("name") String name);

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
 
 import java.util.Optional;
 
@@ -20,7 +19,7 @@ class PetServiceTests {
     @Test
     void createPet_shouldCreatePet() {
         // Arrange: Create a pet object
-        Pet pet = new Pet(0, "test", "test", "test", 2); // ID will be auto-generated
+        Pet pet = new Pet(0, "test", "test", "test", 2, null); // ID will be auto-generated
 
         // Act: Create the pet in the database
         petService.createPet(pet);
@@ -43,10 +42,10 @@ class PetServiceTests {
 
     @Test
     void updatePet_shouldUpdatePet() {
-        Pet pet = new Pet(999999, "test", "test", "test", 2);
+        Pet pet = new Pet(999999, "test", "test", "test", 2, null);
         petService.createPet(pet);
 
-        Pet updatedPet = new Pet(999999, "test2", "test2", "test2", 2);
+        Pet updatedPet = new Pet(999999, "test2", "test2", "test2", 2, null);
         petService.updatePet(pet.getId(), updatedPet);
 
         Assertions.assertNotEquals(updatedPet, petService.getPetById(999999));
