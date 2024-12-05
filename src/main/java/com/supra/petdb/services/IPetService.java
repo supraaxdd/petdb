@@ -6,14 +6,15 @@ import com.supra.petdb.entities.PetRecord;
 import java.util.List;
 
 public interface IPetService {
-    public void createPet(Pet pet);
-    public List<Pet> getAllPets();
-    public Pet getPetById(int id);
-    public void updatePet(int id, Pet pet);
-    public void deletePetById(int id);
-    public void deletePetByName(String name);
-    public List<Pet> getPetsByType(String type);
-    public List<Pet> getPetsByBreed(String breed);
-    public List<PetRecord> getPetRecords();
-    public int getTotalPetCount();
+    void createPet(Pet pet);
+    List<Pet> getAllPets();
+    Pet getPetById(int id);
+    void updatePet(int id, Pet pet);
+    void updatePetName(int id, String petName);
+    void deletePetById(int id);
+    void deletePetByName(String name);
+    List<Pet> getPetsByType(String type);
+    List<Pet> getPetsByBreed(String breed);
+    List<PetRecord> getPetRecords();
+    int getTotalPetCount();
 }

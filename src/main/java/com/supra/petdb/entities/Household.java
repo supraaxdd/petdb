@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @Entity
+@Table(name = "household")
 public class Household {
     @Id
     private String eircode;

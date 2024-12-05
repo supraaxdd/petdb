@@ -49,6 +49,14 @@ public class PetService implements IPetService {
     }
 
     @Override
+    public void updatePetName(int id, String name) {
+        Pet existingPet = petRepository.findById(id).get();
+
+        existingPet.setName(name);
+        petRepository.save(existingPet);
+    }
+
+    @Override
     public void deletePetById(int id) {
         petRepository.deleteById(id);
     }

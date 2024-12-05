@@ -3,9 +3,11 @@ package com.supra.petdb.services;
 import com.supra.petdb.entities.Household;
 import com.supra.petdb.repositories.IHouseholdRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class HouseholdService implements IHouseholdService {
     private IHouseholdRepository householdRepository;
     @Override

@@ -1,5 +1,6 @@
 package com.supra.petdb;
 
+import com.supra.petdb.services.HouseholdService;
 import com.supra.petdb.services.PetService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +11,7 @@ public class PetdbApplication {
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(PetdbApplication.class, args);
         PetService petService = context.getBean(PetService.class);
+        HouseholdService householdService = context.getBean(HouseholdService.class);
         System.out.println(petService.getAllPets());
     }
 }
