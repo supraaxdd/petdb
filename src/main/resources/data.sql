@@ -26,3 +26,5 @@ INSERT INTO pets (name, animal_type, breed, age) VALUES ('Max', 'Dog', 'German S
 INSERT INTO pets (name, animal_type, breed, age) VALUES ('Luna', 'Cat', 'Maine Coon', 3);
 INSERT INTO pets (name, animal_type, breed, age) VALUES ('Nibbles', 'Hamster', 'Syrian Hamster', 1);
 
+INSERT INTO appusers (email, password, first_name, last_name, county, role, enabled) VALUES ('johndoe@gmail.com', '$2a$10$9eAiesZdHmhNpWOL7T5nY.7hRjyIWXuPvvTPq1.NFjvgfq1F2amBe', 'John', 'Doe', 'Cork', 'ROLE_ADMIN', TRUE);
+INSERT INTO appusers (email, password, first_name, last_name, county, role, enabled) VALUES ('maryjane@gmail.com', '$2a$10$9eAiesZdHmhNpWOL7T5nY.7hRjyIWXuPvvTPq1.NFjvgfq1F2amBe', 'Mary', 'Jane', 'Kerry', 'ROLE_USER', TRUE);

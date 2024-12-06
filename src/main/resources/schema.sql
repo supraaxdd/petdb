@@ -14,3 +14,13 @@ CREATE TABLE pets (
       household VARCHAR(8),
       FOREIGN KEY (household) REFERENCES household(eircode)
 );
+
+CREATE TABLE appusers (
+    email VARCHAR(255) PRIMARY KEY,
+    password VARCHAR(255) NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    county VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL,
+    enabled BOOLEAN DEFAULT TRUE
+);

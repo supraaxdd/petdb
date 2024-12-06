@@ -5,6 +5,7 @@ import com.supra.petdb.services.PetService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class PetdbApplication {
@@ -12,6 +13,5 @@ public class PetdbApplication {
         ApplicationContext context = SpringApplication.run(PetdbApplication.class, args);
         PetService petService = context.getBean(PetService.class);
         HouseholdService householdService = context.getBean(HouseholdService.class);
-        System.out.println(petService.getAllPets());
     }
 }

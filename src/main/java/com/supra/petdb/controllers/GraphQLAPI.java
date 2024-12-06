@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
@@ -48,17 +49,20 @@ public class GraphQLAPI {
     }
 
     @MutationMapping
+    @Secured(value = {"ADMIN", "USER"})
     Household createHousehold(@Argument Household household) {
         return householdService.createHousehold(household);
     }
 
     @MutationMapping
+    @Secured(value = "ROLE_ADMIN")
     int deleteHouseholdByEircode(@Argument String eircode) {
         householdService.deleteHouseholdById(eircode);
         return 0;
     }
 
     @MutationMapping
+    @Secured(value = "ROLE_ADMIN")
     int deletePetById(@Argument int id) {
         petService.deletePetById(id);
         return 0;
