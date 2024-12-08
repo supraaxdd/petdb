@@ -6,6 +6,7 @@ import com.supra.petdb.entities.PetRecord;
 import com.supra.petdb.services.HouseholdService;
 import com.supra.petdb.services.PetService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +15,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/")
+@AllArgsConstructor
 public class WebServiceController {
-
-    @Autowired
     private HouseholdService householdService;
-
-    @Autowired
     private PetService petService;
 
     @GetMapping("/getallpets")

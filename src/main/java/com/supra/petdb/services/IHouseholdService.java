@@ -13,6 +13,4 @@ public interface IHouseholdService {
     public Household updateHouseholdDetails(String eircode, Household updatedHousehold);
     public void deleteHouseholdById(String eircode);
     public List<Household> getHouseholdsWithoutPets();
-
-
 }

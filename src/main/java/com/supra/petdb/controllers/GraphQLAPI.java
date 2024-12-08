@@ -17,10 +17,7 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class GraphQLAPI {
-    @Autowired
     private PetService petService;
-
-    @Autowired
     private HouseholdService householdService;
 
     @QueryMapping
